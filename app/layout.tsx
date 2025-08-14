@@ -6,11 +6,12 @@ import localFont from "next/font/local";
 
 const inter = localFont({
   src: [
-    { path: "./fonts/Inter-Regular.ttf", weight: "400", style: "normal" },
-    { path: "./fonts/Inter-Italic.ttf", weight: "400", style: "italic" },
+    { path: "/fonts/inter/Inter-Regular.ttf", weight: "400", style: "normal" },
+    { path: "/fonts/inter/Inter-Italic.ttf", weight: "400", style: "italic" },
   ],
   display: "swap",
 });
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
