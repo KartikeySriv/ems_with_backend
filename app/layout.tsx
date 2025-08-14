@@ -1,3 +1,5 @@
+"use client";
+
 import "./globals.css";
 import { AuthProvider } from "@/context/auth-context"; // adjust path if needed
 import localFont from "next/font/local";
