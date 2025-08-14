@@ -58,7 +58,7 @@ export default function DashboardOverview() {
       //   color: "text-orange-600",
       // }
     );
-  } else if (user?.role === "HR" || user?.role === "EMPLOYEE") {
+  } else if (user?.role === "HR") {
     stats.push({
       title: "Average Salary",
       value: averageSalaryValue,
