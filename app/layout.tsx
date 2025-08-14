@@ -6,8 +6,8 @@ import localFont from "next/font/local";
 
 const inter = localFont({
   src: [
-    { path: "/fonts/inter/Inter-Regular.ttf", weight: "400", style: "normal" },
-    { path: "/fonts/inter/Inter-Italic.ttf", weight: "400", style: "italic" },
+    { path: "../assets/fonts/inter/Inter-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../assets/fonts/inter/Inter-Italic.ttf", weight: "400", style: "italic" },
   ],
   display: "swap",
 });
