@@ -1,27 +1,23 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { AuthProvider } from "@/context/auth-context"
+import "./globals.css";
+import { AuthProvider } from "@/context/auth-context"; // adjust path if needed
+import localFont from "next/font/local";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = localFont({
+  src: [
+    { path: "./fonts/Inter-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/Inter-Italic.ttf", weight: "400", style: "italic" },
+  ],
+  display: "swap",
+});
 
-export const metadata: Metadata = {
-  title: "Employee Management System",
-  description: "Modern employee management system with comprehensive features",
-    generator: 'v0.dev'
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+    <html lang="en" className={inter.className}>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
-  )
+  );
 }
