@@ -58,6 +58,8 @@ export default function HRAttendanceManager() {
       const data: Attendance[] = await response.json();
       const todaysAttendance = data.find(att => format(new Date(att.date), "yyyy-MM-dd") === today);
 
+
+
       setEmployeeAttendance(prev => ({
         ...prev,
         [employeeId]: {
@@ -173,7 +175,17 @@ export default function HRAttendanceManager() {
           { status: currentEmployeeStatus.currentStatus, date: today, employeeId: employeeId}
         );
         success = updateResponse.success;
-        if (!success) {
+        if (success) {
+          // Update local state immediately for update case
+          setEmployeeAttendance(prev => ({
+            ...prev,
+            [employeeId]: {
+              ...prev[employeeId],
+              currentStatus: currentEmployeeStatus.currentStatus,
+              error: null,
+            }
+          }));
+        } else {
             setEmployeeAttendance(prev => ({
                 ...prev,
                 [employeeId]: {
@@ -196,6 +208,7 @@ export default function HRAttendanceManager() {
             [employeeId]: {
               ...prev[employeeId],
               attendanceId: attendanceId,
+              currentStatus: currentEmployeeStatus.currentStatus, // Keep the selected status
               error: null,
             }
           }));
@@ -212,8 +225,21 @@ export default function HRAttendanceManager() {
 
       if (success) {
         alert(`Attendance for ${currentEmployeeStatus.fullName} ${currentEmployeeStatus.currentStatus.toLowerCase()} successfully!`);
-        // Refresh attendance for this employee to show the latest status
-        await fetchEmployeeAttendanceForToday(employeeId, currentEmployeeStatus.fullName);
+        
+
+        
+        // Update local state immediately to reflect the change
+        setEmployeeAttendance(prev => ({
+          ...prev,
+          [employeeId]: {
+            ...prev[employeeId],
+            currentStatus: currentEmployeeStatus.currentStatus,
+            attendanceId: attendanceId,
+            error: null,
+          }
+        }));
+        
+        // Refresh attendance summary for this employee
         await fetchEmployeeMonthlySummary(employeeId, currentEmployeeStatus.fullName);
       } else {
         // Error message already set by the specific calls
@@ -330,10 +356,10 @@ export default function HRAttendanceManager() {
                       {isSubmitting[String(employee.id)] ? (
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       ) : (
-                        employeeAttendance[String(employee.id)]?.currentStatus === "NOT_MARKED" ? "Mark Attendance" : "Update Attendance"
+                        employeeAttendance[String(employee.id)]?.attendanceId ? "Update Attendance" : "Mark Attendance"
                       )}
                     </Button>
-                    {employeeAttendance[String(employee.id)]?.currentStatus !== "NOT_MARKED" && (
+                    {employeeAttendance[String(employee.id)]?.attendanceId && (
                         getStatusBadge(employeeAttendance[String(employee.id)]?.currentStatus || "")
                     )}
                   </div>

@@ -23,7 +23,6 @@ export default function AdminPanel() {
     }
   }, [user?.role])
 
-  // Filter employees based on search term
   const filteredEmployees = employees.filter(emp => 
     emp.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     emp.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||

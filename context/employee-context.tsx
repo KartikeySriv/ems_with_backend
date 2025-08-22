@@ -349,8 +349,7 @@ export function EmployeeProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await apiService.markAttendance(employeeId, status)
       if (response.success) {
-        // Refresh attendance if needed
-        fetchAttendanceByEmployee(employeeId)
+        // Don't auto-refresh - let the calling component manage its own state
         return response
       } else {
         setError(response.message || "Failed to mark attendance")
@@ -362,7 +361,7 @@ export function EmployeeProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setLoading(false)
     }
-  }, [fetchAttendanceByEmployee])
+  }, [])
 
   const checkIn = useCallback(async (employeeId: string, time: { hour: number; minute: number; second: number; nano: number }): Promise<void> => {
     setLoading(true)

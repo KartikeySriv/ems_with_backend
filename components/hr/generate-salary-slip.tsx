@@ -12,7 +12,7 @@ import { format } from "date-fns";
 
 export default function GenerateSalarySlip() {
   const { user } = useAuth();
-  const { employees, fetchEmployeesByHR, fetchEmployeesByAdminHRs, isLoading: employeesLoading, error: employeesError, generateSalarySlip } = useEmployee();
+  const { employees, fetchEmployeesByHR, fetchAllEmployeesForAdmin, isLoading: employeesLoading, error: employeesError, generateSalarySlip } = useEmployee();
 
   const [selectedMonth, setSelectedMonth] = useState<string>(format(new Date(), "MM"));
   const [selectedYear, setSelectedYear] = useState<string>(format(new Date(), "yyyy"));
@@ -24,9 +24,9 @@ export default function GenerateSalarySlip() {
     if (user?.role === "HR" && user?.id) {
       fetchEmployeesByHR(user.id);
     } else if (user?.role === "ADMIN" && user?.id) {
-      fetchEmployeesByAdminHRs(user.id);
+      fetchAllEmployeesForAdmin();
     } 
-  }, [user?.role, user?.id, fetchEmployeesByHR, fetchEmployeesByAdminHRs]);
+  }, [user?.role, user?.id, fetchEmployeesByHR, fetchAllEmployeesForAdmin]);
 
   const handleGenerate = useCallback(async (employeeId: string) => {
     setIsGenerating(prev => ({ ...prev, [employeeId]: true }));

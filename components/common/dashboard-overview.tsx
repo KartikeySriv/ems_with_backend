@@ -74,8 +74,6 @@ export default function DashboardOverview() {
     { action: "Dashboard initialized", time: "2 minutes ago" },
   ]
 
-  // For admin users, wait for both employees and HRs to be loaded
-  // Show loading until we have both data sets
   const shouldShowLoading = user?.role === "ADMIN" 
     ? (isLoading || isLoadingHRs) || (employees.length === 0 || hrs.length === 0)
     : isLoading && employees.length === 0;

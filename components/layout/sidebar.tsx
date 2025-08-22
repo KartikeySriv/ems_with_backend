@@ -38,8 +38,8 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
     { id: "salary", label: "Salary Slips", icon: DollarSign, roles: ["employee"] },
     { id: "generate-salary-slip", label: "Generate Salary Slip", icon: DollarSign, roles: ["hr", "admin"] },
     { id: "hr-attendance", label: "Attendance Management", icon: Clock, roles: ["hr"] },
-    { id: "hr", label: "HR Tools", icon: FileText, roles: ["admin", "hr"] },
-    { id: "admin", label: "Admin Panel", icon: Settings, roles: ["admin"] },
+    // { id: "hr", label: "HR Tools", icon: FileText, roles: ["admin", "hr"] },
+    // { id: "admin", label: "Admin Panel", icon: Settings, roles: ["admin"] },
   ]
 
   const filteredMenuItems = menuItems.filter((item) => user?.role && item.roles.includes(user.role.toLowerCase()))
